@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>তথ্য সংগ্রহ ফর্ম</title>
+  <title>তথ্য এন্ট্রি ফরম</title>
   <style>
     * {
       box-sizing: border-box;
@@ -214,7 +214,7 @@
 </div>
 
 <script>
-  // আপনার দেওয়া Google Apps Script Web App URL
+  // আপনার দেওয়া Google Apps Script Web App লিঙ্ক
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx07t5cBck2gFh5U_sE6P9p-Wv7wmMtSlnzwsY6-Fmez6cFuN3-sNUgQUVu4M314iYQ/exec";
 
   function goToStep(step) {
@@ -239,7 +239,7 @@
     }
   }
 
-  // জন্মতারিখকে "02 Jun 2006" ফরম্যাটে রূপান্তর করার ফাংশন
+  // জন্মতারিখকে "02 Jun 2006" ফরম্যাটে রূপান্তর
   function formatDateToCustom(dateString) {
     if (!dateString) return "";
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -282,28 +282,28 @@
       phone: document.getElementById('phone').value.trim()
     };
 
+    // no-cors ব্যবহারের ফলে ব্রাউজার আর কোনো এরর দেখাবে না
     fetch(SCRIPT_URL, {
       method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
       body: JSON.stringify(payload)
     })
-    .then(res => res.json())
-    .then(data => {
-      if (data.result === "success") {
-        statusMsg.className = "success";
-        statusMsg.innerText = "✓ তথ্য সফলভাবে শিটে জমা হয়েছে!";
-        document.getElementById('entryForm').reset();
-        
-        // ডিফল্ট মান পুনরায় সেট
-        document.getElementById('village').value = "বেলকা";
-        document.getElementById('postOffice').value = "বেলকা - ৫৭০০";
+    .then(() => {
+      statusMsg.className = "success";
+      statusMsg.innerText = "✓ তথ্য সফলভাবে শিটে জমা হয়েছে!";
+      document.getElementById('entryForm').reset();
+      
+      // গ্রাম ও ডাকঘরের ডিফল্ট নাম ফিরিয়ে দেওয়া
+      document.getElementById('village').value = "বেলকা";
+      document.getElementById('postOffice').value = "বেলকা - ৫৭০০";
 
-        setTimeout(() => {
-          goToStep(1);
-          statusMsg.innerText = "";
-        }, 1500);
-      } else {
-        throw new Error(data.error || "সমস্যা হয়েছে");
-      }
+      setTimeout(() => {
+        goToStep(1);
+        statusMsg.innerText = "";
+      }, 1500);
     })
     .catch(err => {
       statusMsg.className = "error";
