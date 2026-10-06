@@ -214,7 +214,6 @@
 </div>
 
 <script>
-  // আপনার দেওয়া Google Apps Script Web App লিঙ্ক
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx07t5cBck2gFh5U_sE6P9p-Wv7wmMtSlnzwsY6-Fmez6cFuN3-sNUgQUVu4M314iYQ/exec";
 
   function goToStep(step) {
@@ -239,7 +238,6 @@
     }
   }
 
-  // জন্মতারিখকে "02 Jun 2006" ফরম্যাটে রূপান্তর
   function formatDateToCustom(dateString) {
     if (!dateString) return "";
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -271,32 +269,30 @@
     const rawDob = document.getElementById('dob').value;
     const formattedDob = formatDateToCustom(rawDob);
 
-    const payload = {
-      nameBn: document.getElementById('nameBn').value.trim(),
-      nameEn: document.getElementById('nameEn').value.trim(),
-      father: document.getElementById('father').value.trim(),
-      mother: document.getElementById('mother').value.trim(),
-      dob: formattedDob,
-      idNo: document.getElementById('idNo').value.trim(),
-      fullAddress: fullAddress,
-      phone: document.getElementById('phone').value.trim()
-    };
+    // URLSearchParams ব্যবহার করে স্ট্যান্ডার্ড ফর্ম ডাটা তৈরি (এটি শিটে ১০০% কাজ করে)
+    const formData = new URLSearchParams();
+    formData.append("nameBn", document.getElementById('nameBn').value.trim());
+    formData.append("nameEn", document.getElementById('nameEn').value.trim());
+    formData.append("father", document.getElementById('father').value.trim());
+    formData.append("mother", document.getElementById('mother').value.trim());
+    formData.append("dob", formattedDob);
+    formData.append("idNo", document.getElementById('idNo').value.trim());
+    formData.append("fullAddress", fullAddress);
+    formData.append("phone", document.getElementById('phone').value.trim());
 
-    // no-cors ব্যবহারের ফলে ব্রাউজার আর কোনো এরর দেখাবে না
     fetch(SCRIPT_URL, {
       method: "POST",
       mode: "no-cors",
       headers: {
-        "Content-Type": "text/plain;charset=utf-8"
+        "Content-Type": "application/x-www-form-urlencoded"
       },
-      body: JSON.stringify(payload)
+      body: formData.toString()
     })
     .then(() => {
       statusMsg.className = "success";
       statusMsg.innerText = "✓ তথ্য সফলভাবে শিটে জমা হয়েছে!";
       document.getElementById('entryForm').reset();
       
-      // গ্রাম ও ডাকঘরের ডিফল্ট নাম ফিরিয়ে দেওয়া
       document.getElementById('village').value = "বেলকা";
       document.getElementById('postOffice').value = "বেলকা - ৫৭০০";
 
