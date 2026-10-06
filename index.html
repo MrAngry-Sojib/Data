@@ -214,7 +214,8 @@
 </div>
 
 <script>
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx07t5cBck2gFh5U_sE6P9p-Wv7wmMtSlnzwsY6-Fmez6cFuN3-sNUgQUVu4M314iYQ/exec";
+  // আপনার নতুন অ্যাকাউন্টের Google Apps Script Web App URL
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzu-NPrlFq50BX_EWymBxQgbS1DQvzR6fYA1hVJ9HfUNE5M06afeV_YKwpOYYWs0H8rUw/exec";
 
   function goToStep(step) {
     if (step === 2) {
@@ -238,6 +239,7 @@
     }
   }
 
+  // জন্মতারিখ রূপান্তর (02 Jun 2006)
   function formatDateToCustom(dateString) {
     if (!dateString) return "";
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -269,7 +271,7 @@
     const rawDob = document.getElementById('dob').value;
     const formattedDob = formatDateToCustom(rawDob);
 
-    // URLSearchParams ব্যবহার করে স্ট্যান্ডার্ড ফর্ম ডাটা তৈরি (এটি শিটে ১০০% কাজ করে)
+    // URLSearchParams দিয়ে ফর্ম ডাটা তৈরি
     const formData = new URLSearchParams();
     formData.append("nameBn", document.getElementById('nameBn').value.trim());
     formData.append("nameEn", document.getElementById('nameEn').value.trim());
