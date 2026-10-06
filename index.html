@@ -214,7 +214,6 @@
 </div>
 
 <script>
-  // আপনার নতুন অ্যাকাউন্টের Google Apps Script Web App URL
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzu-NPrlFq50BX_EWymBxQgbS1DQvzR6fYA1hVJ9HfUNE5M06afeV_YKwpOYYWs0H8rUw/exec";
 
   function goToStep(step) {
@@ -239,7 +238,6 @@
     }
   }
 
-  // জন্মতারিখ রূপান্তর (02 Jun 2006)
   function formatDateToCustom(dateString) {
     if (!dateString) return "";
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -271,7 +269,6 @@
     const rawDob = document.getElementById('dob').value;
     const formattedDob = formatDateToCustom(rawDob);
 
-    // URLSearchParams দিয়ে ফর্ম ডাটা তৈরি
     const formData = new URLSearchParams();
     formData.append("nameBn", document.getElementById('nameBn').value.trim());
     formData.append("nameEn", document.getElementById('nameEn').value.trim());
